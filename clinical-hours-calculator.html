@@ -1,102 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clinical Hours Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 2rem;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    .calculator {
-      max-width: 700px;
-      background: white;
-      padding: 2rem;
-      margin: 0 auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1.5rem;
-    }
-    th, td {
-      text-align: left;
-      padding: 8px;
-    }
-    th {
-      background-color: #eaeaea;
-    }
-    input[type="number"] {
-      width: 100%;
-      padding: 6px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .total {
-      font-size: 1.25rem;
-      text-align: right;
-      font-weight: bold;
-      color: #2c3e50;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clinical Hours Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 2rem;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .calculator {
+            max-width: 800px;
+            background: white;
+            padding: 2rem;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .add-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .add-form label {
+            font-weight: bold;
+            color: #333;
+        }
+        select, button {
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        select {
+            flex-grow: 1;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #e9ecef;
+            color: #495057;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .total {
+            font-size: 1.5rem;
+            text-align: right;
+            font-weight: bold;
+            color: #27ae60; /* A pleasant green for the final total */
+            border-top: 2px solid #ddd;
+            padding-top: 15px;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        .remove-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
 </head>
 <body>
-  <h1>Clinical Hours Calculator</h1>
-  <div class="calculator">
-    <table>
-      <thead>
-        <tr>
-          <th>Appointment Type</th>
-          <th>Sessions</th>
-          <th>Hours per Session</th>
-        </tr>
-      </thead>
-      <tbody id="sessionTable">
-        <tr><td>Counseling Session</td><td><input type="number" min="0" value="0" data-hours="1"></td><td>1</td></tr>
-        <tr><td>Couples Counseling</td><td><input type="number" min="0" value="0" data-hours="1"></td><td>1</td></tr>
-        <tr><td>Initial Intake</td><td><input type="number" min="0" value="0" data-hours="1.5"></td><td>1.5</td></tr>
-        <tr><td>Counseling Session - Forty-Five</td><td><input type="number" min="0" value="0" data-hours="0.75"></td><td>0.75</td></tr>
-        <tr><td>Counseling Session - Half hour</td><td><input type="number" min="0" value="0" data-hours="0.5"></td><td>0.5</td></tr>
-        <tr><td>Counseling with Family (patient present)</td><td><input type="number" min="0" value="0" data-hours="1"></td><td>1</td></tr>
-        <tr><td>Counseling with Family (without patient)</td><td><input type="number" min="0" value="0" data-hours="1"></td><td>1</td></tr>
-        <tr><td>Interactive complexity</td><td><input type="number" min="0" value="0" data-hours="0"></td><td>0</td></tr>
-        <tr><td>Counseling Session (First 60, Crisis)</td><td><input type="number" min="0" value="0" data-hours="1"></td><td>1</td></tr>
-        <tr><td>Counseling Session (Additional 30, Crisis)</td><td><input type="number" min="0" value="0" data-hours="0.5"></td><td>0.5</td></tr>
-        <tr><td>Counseling Session (with treatment plan review)</td><td><input type="number" min="0" value="0" data-hours="1"></td><td>1</td></tr>
-        <tr><td>2 hours couples counseling</td><td><input type="number" min="0" value="0" data-hours="2"></td><td>2</td></tr>
-        <tr><td>1.5 hour couples counseling</td><td><input type="number" min="0" value="0" data-hours="1.5"></td><td>1.5</td></tr>
-        <tr><td>Patient initiated phone call (5-10 minutes)</td><td><input type="number" min="0" value="0" data-hours="0.17"></td><td>0.17</td></tr>
-        <tr><td>Patient initiated phone call (11-15 minutes)</td><td><input type="number" min="0" value="0" data-hours="0.25"></td><td>0.25</td></tr>
-      </tbody>
-    </table>
-    <div class="total">Total Clinical Hours: <span id="totalHours">0</span></div>
-  </div>
+    <h1>Clinical Hours Calculator ⏱️</h1>
+    <div class="calculator">
+        <div class="add-form">
+            <label for="appointmentSelect">Add Appointment Type:</label>
+            <select id="appointmentSelect">
+                </select>
+            <button id="addAppointmentBtn">Add to List</button>
+        </div>
 
-  <script>
-    const inputs = document.querySelectorAll('#sessionTable input');
-    const totalEl = document.getElementById('totalHours');
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Appointment Type</th>
+                    <th style="width: 15%;">Hours</th>
+                    <th style="width: 15%;">Sessions</th>
+                    <th style="width: 10%;">Remove</th>
+                </tr>
+            </thead>
+            <tbody id="sessionTable">
+                </tbody>
+        </table>
 
-    function calculateTotal() {
-      let total = 0;
-      inputs.forEach(input => {
-        const count = parseFloat(input.value) || 0;
-        const hours = parseFloat(input.dataset.hours);
-        total += count * hours;
-      });
-      totalEl.textContent = total.toFixed(2);
-    }
+        <div class="total">Total Clinical Hours: <span id="totalHours">0.00</span></div>
+    </div>
 
-    inputs.forEach(input => input.addEventListener('input', calculateTotal));
-  </script>
+    <script>
+        // 1. HARDCODED APPOINTMENT DATA
+        const appointmentData = [
+            { name: "Counseling Session (60 min)", hours: 1.0 },
+            { name: "Couples Counseling (60 min)", hours: 1.0 },
+            { name: "Initial Intake (90 min)", hours: 1.5 },
+            { name: "Counseling Session - 45 min", hours: 0.75 },
+            { name: "Counseling Session - 30 min", hours: 0.5 },
+            { name: "Family Counseling (patient present)", hours: 1.0 },
+            { name: "Family Counseling (without patient)", hours: 1.0 },
+            { name: "Interactive complexity (Add-on)", hours: 0.0 }, // Hours is 0, session count still tracked
+            { name: "Crisis Counseling (First 60 min)", hours: 1.0 },
+            { name: "Crisis Counseling (Additional 30 min)", hours: 0.5 },
+            { name: "Counseling (w/ treatment plan review)", hours: 1.0 },
+            { name: "Couples Counseling (120 min)", hours: 2.0 },
+            { name: "Couples Counseling (90 min)", hours: 1.5 },
+            { name: "Patient Call (5-10 min)", hours: 0.17 },
+            { name: "Patient Call (11-15 min)", hours: 0.25 }
+        ];
+
+        // 2. DOM ELEMENTS
+        const selectEl = document.getElementById('appointmentSelect');
+        const addBtn = document.getElementById('addAppointmentBtn');
+        const tableBody = document.getElementById('sessionTable');
+        const totalEl = document.getElementById('totalHours');
+
+        // 3. INITIAL SETUP: Populate the dropdown menu
+        function populateDropdown() {
+            // Add a default prompt
+            selectEl.innerHTML = '<option value="" disabled selected>-- Select an Appointment Type --</option>';
+
+            appointmentData.forEach((item, index) => {
+                const option = document.createElement('option');
+                // Use the array index as the value for easy retrieval
+                option.value = index; 
+                option.textContent = `${item.name} (${item.hours} hours)`;
+                selectEl.appendChild(option);
+            });
+        }
+
+        // 4. CORE FUNCTION: Calculate the total hours
+        function calculateTotal() {
+            let total = 0;
+            // Select all active input fields in the table
+            const inputs = document.querySelectorAll('#sessionTable input[type="number"]');
+
+            inputs.forEach(input => {
+                const count = parseFloat(input.value) || 0;
+                // Get the hours value from the data attribute on the input
+                const hours = parseFloat(input.dataset.hours); 
+                total += count * hours;
+            });
+            totalEl.textContent = total.toFixed(2);
+        }
+
+        // 5. EVENT HANDLERS
+
+        // Handler to add a new appointment row
+        function addAppointmentRow() {
+            const selectedIndex = selectEl.value;
+
+            if (selectedIndex === "") {
+                alert("Please select an appointment type to add.");
+                return;
+            }
+            
+            // Check if this type is already in the table to prevent duplicates
+            const existingRow = document.querySelector(`#sessionTable tr[data-index='${selectedIndex}']`);
+            if (existingRow) {
+                alert(`${appointmentData[selectedIndex].name} is already in the list!`);
+                return;
+            }
+
+            const item = appointmentData[selectedIndex];
+            const newRow = document.createElement('tr');
+            newRow.setAttribute('data-index', selectedIndex); // Use index for easy removal check
+
+            newRow.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.hours.toFixed(2)}</td>
+                <td><input type="number" min="0" value="0" data-hours="${item.hours}"></td>
+                <td><button class="remove-btn">Remove</button></td>
+            `;
+
+            tableBody.appendChild(newRow);
+
+            // Attach event listeners to the new input and remove button
+            newRow.querySelector('input').addEventListener('input', calculateTotal);
+            newRow.querySelector('.remove-btn').addEventListener('click', (e) => {
+                e.target.closest('tr').remove();
+                calculateTotal(); // Recalculate after removal
+            });
+
+            // Recalculate total immediately after adding
+            calculateTotal(); 
+
+            // Reset dropdown to default option
+            selectEl.value = ""; 
+        }
+
+        // Initialize the calculator
+        populateDropdown();
+        addBtn.addEventListener('click', addAppointmentRow);
+    </script>
 </body>
 </html>
