@@ -84,7 +84,7 @@
             font-size: 1.5rem;
             text-align: right;
             font-weight: bold;
-            color: #27ae60; /* A pleasant green for the final total */
+            color: #27ae60;
             border-top: 2px solid #ddd;
             padding-top: 15px;
         }
@@ -125,23 +125,23 @@
     </div>
 
     <script>
-        // 1. HARDCODED APPOINTMENT DATA
+        // 1. HARDCODED APPOINTMENT DATA - UPDATED NAMES
         const appointmentData = [
-            { name: "Counseling Session (60 min)", hours: 1.0 },
-            { name: "Couples Counseling (60 min)", hours: 1.0 },
-            { name: "Initial Intake (90 min)", hours: 1.5 },
-            { name: "Counseling Session - 45 min", hours: 0.75 },
-            { name: "Counseling Session - 30 min", hours: 0.5 },
-            { name: "Family Counseling (patient present)", hours: 1.0 },
-            { name: "Family Counseling (without patient)", hours: 1.0 },
-            { name: "Interactive complexity (Add-on)", hours: 0.0 }, // Hours is 0, session count still tracked
-            { name: "Crisis Counseling (First 60 min)", hours: 1.0 },
-            { name: "Crisis Counseling (Additional 30 min)", hours: 0.5 },
-            { name: "Counseling (w/ treatment plan review)", hours: 1.0 },
-            { name: "Couples Counseling (120 min)", hours: 2.0 },
-            { name: "Couples Counseling (90 min)", hours: 1.5 },
-            { name: "Patient Call (5-10 min)", hours: 0.17 },
-            { name: "Patient Call (11-15 min)", hours: 0.25 }
+            { name: "Counseling Session - Clinical Hour", hours: 1.0 },
+            { name: "Couples Counseling", hours: 1.0 },
+            { name: "Initial Intake", hours: 1.5 },
+            { name: "Counseling Session - Forty-Five", hours: 0.75 },
+            { name: "Counseling Session - Half hour", hours: 0.5 },
+            { name: "Counseling with Family (patient present)", hours: 1.0 },
+            { name: "Counseling with Family (without patient)", hours: 1.0 },
+            { name: "Interactive complexity", hours: 0.0 },
+            { name: "Counseling Session (First 60, Crisis)", hours: 1.0 },
+            { name: "Counseling Session (Additional 30, Crisis)", hours: 0.5 },
+            { name: "Counseling Session (with treatment plan review)", hours: 1.0 },
+            { name: "2 hours couples counseling", hours: 2.0 },
+            { name: "1.5 hour couples counseling", hours: 1.5 },
+            { name: "Patient initiated phone call (5-10 minutes)", hours: 0.17 },
+            { name: "Patient initiated phone call (11-15 minutes)", hours: 0.25 }
         ];
 
         // 2. DOM ELEMENTS
@@ -159,7 +159,8 @@
                 const option = document.createElement('option');
                 // Use the array index as the value for easy retrieval
                 option.value = index; 
-                option.textContent = `${item.name} (${item.hours} hours)`;
+                // CRITICAL CHANGE: Only use the item.name for the display text
+                option.textContent = item.name;
                 selectEl.appendChild(option);
             });
         }
